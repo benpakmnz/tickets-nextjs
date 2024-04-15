@@ -1,13 +1,13 @@
 "use server";
 
-import { db } from "@/app/_helper/config/db";
-import { updateParentTicketStatus } from "@/app/_helper/dbUtils/ticketUtils";
+import { db } from "@/lib/db/config/db";
+import { updateParentTicketStatus } from "@/lib/db/dbUtils/ticketUtils";
 import { TaskStatus } from "@/types";
 import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 
 interface PatchRequestBody {
-  status: TaskStatus; // Ensure status is of TaskStatus type
+  status: TaskStatus;
 }
 
 export async function PATCH(
@@ -22,7 +22,12 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const validStatusValues: TaskStatus[] = ["backlog", "in progress", "done"];
+    const validStatusValues: TaskStatus[] = [
+      "backlog",
+      "todo",
+      "in progress",
+      "done",
+    ];
 
     if (!Object.values(validStatusValues).includes(body.status)) {
       return NextResponse.json(

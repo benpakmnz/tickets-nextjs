@@ -1,9 +1,9 @@
-import { db } from "@/app/_helper/config/db";
+import { db } from "@/lib/db/config/db";
 import { TicketStatus } from "@/types";
 import { NextResponse, NextRequest } from "next/server";
 
 interface PatchRequestBody {
-  status: TicketStatus; // Ensure status is of TaskStatus type
+  status: TicketStatus;
 }
 
 export async function PATCH(
@@ -46,7 +46,6 @@ export async function PATCH(
       { status: 200 }
     );
   } catch (error) {
-    console.log("deeee");
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }

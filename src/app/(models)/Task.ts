@@ -1,7 +1,22 @@
-import mongoose, { Schema } from "mongoose";
+import { ITaskAttrs } from "@/types";
+import mongoose, { Model, Schema, Document } from "mongoose";
+
+interface ITaskModel extends Model<ITaskDocument> {
+  build(attrs: ITaskAttrs): ITaskDocument;
+}
+
+export interface ITaskDocument extends Document {
+  id: string;
+  title: string;
+  description: string;
+  owner: string;
+  status: string;
+  ticketId: Schema.Types.ObjectId;
+}
 
 const tasksSchema = new Schema(
   {
+    id: { type: String },
     title: { type: String, required: true },
     description: { type: String, required: true },
     owner: { type: String, required: true },
@@ -19,6 +34,8 @@ const tasksSchema = new Schema(
   }
 );
 
-const Tasks = mongoose.models.Tasks || mongoose.model("Tasks", tasksSchema);
+const Tasks =
+  mongoose.models.Tasks ||
+  mongoose.model<ITaskDocument, ITaskModel>("Tasks", tasksSchema);
 
 export default Tasks;

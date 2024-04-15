@@ -1,18 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ITask } from "../../types";
+import { ITaskAttrs } from "../../types";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 
-interface ITaskItemProps {
-  task: ITask;
-}
-
-const TaskItem = ({ task }: ITaskItemProps) => {
+const TaskItem = ({ task }: { task: ITaskAttrs }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    console.log(task.id);
     router.push(`/task/${task.id}`);
   };
 

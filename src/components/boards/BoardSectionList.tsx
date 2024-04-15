@@ -16,7 +16,7 @@ import {
   KeyboardSensor,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { BoardSections as BoardSectionsType, ITicket } from "../../types";
+import { BoardSections as BoardSectionsType, ITicketAttrs } from "../../types";
 import BoardSection from "./BoardSection";
 import TaskItem from "./TaskItem";
 import { findBoardSectionContainer, initializeBoard } from "@/lib/board";
@@ -24,7 +24,7 @@ import { getTaskById } from "@/lib/tasks";
 import { useRouter } from "next/navigation";
 import { updateTaskStatus } from "@/lib/task-service";
 
-const BoardSectionList = ({ ticket }: { ticket: ITicket }) => {
+const BoardSectionList = ({ ticket }: { ticket: ITicketAttrs }) => {
   const router = useRouter();
   const [boardSections, setBoardSections] = useState<BoardSectionsType>(
     initializeBoard(ticket.tasks || [])
@@ -33,7 +33,6 @@ const BoardSectionList = ({ ticket }: { ticket: ITicket }) => {
   useEffect(() => {
     const initialBoardSections = initializeBoard(ticket.tasks || []);
     setBoardSections(initialBoardSections);
-    console.log(ticket.status);
   }, [ticket]);
   const [activeTaskId, setActiveTaskId] = useState<null | string>(null);
 

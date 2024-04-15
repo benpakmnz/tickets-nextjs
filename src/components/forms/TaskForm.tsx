@@ -13,17 +13,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ITicket } from "@/types";
+import { ITicketAttrs, TaskStatus } from "@/types";
 
 const TicketForm = ({
   initialData,
   ticketId,
 }: {
-  initialData: ITicket;
+  initialData: ITicketAttrs;
   ticketId?: string;
 }) => {
   const router = useRouter();
-  const [formData, setFormData] = useState<ITicket>(
+  const [formData, setFormData] = useState<ITicketAttrs>(
     initialData || {
       title: "",
       description: "",
@@ -31,7 +31,12 @@ const TicketForm = ({
       owner: "",
     }
   );
-  const statusOptions = ["new", "in_progress", "done", "backlog"];
+  const statusOptions: TaskStatus[] = [
+    "backlog",
+    "todo",
+    "in progress",
+    "done",
+  ];
 
   const handleChange = (e: any) => {
     const value = e.target?.value || e.value;

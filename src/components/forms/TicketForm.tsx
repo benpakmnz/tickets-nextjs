@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -14,12 +14,11 @@ import {
   SelectValue,
 } from "../ui/select";
 import { DatePicker } from "../DatePicker";
-import { ITicket } from "@/types";
-import { log } from "console";
+import { ITicketAttrs } from "@/types";
 
-const TicketForm = ({ initialData }: { initialData: ITicket }) => {
+const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
   const router = useRouter();
-  const [formData, setFormData] = useState<ITicket>(
+  const [formData, setFormData] = useState<ITicketAttrs>(
     initialData || {
       title: "",
       description: "",

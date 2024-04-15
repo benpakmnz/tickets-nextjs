@@ -1,6 +1,6 @@
 import BoardSectionList from "@/components/boards/BoardSectionList";
 import Header from "@/components/Header";
-import { ITicket } from "@/types";
+import { ITicketAttrs } from "@/types";
 import { addDays, startOfWeek } from "date-fns";
 
 const getTickets = async (from: string, to: string) => {
@@ -36,7 +36,7 @@ export default async function Home({
       <Header />
       <main className="items-center justify-between">
         {tickets &&
-          tickets.map((ticket: ITicket) => (
+          tickets.map((ticket: ITicketAttrs) => (
             <BoardSectionList ticket={ticket} key={ticket.id} />
           ))}
       </main>

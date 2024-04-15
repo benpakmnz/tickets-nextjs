@@ -2,7 +2,7 @@
 
 import { NextResponse, NextRequest } from "next/server";
 import { revalidateTag } from "next/cache";
-import { db } from "@/app/_helper/config/db";
+import { db } from "@/lib/db/config/db";
 
 export async function GET(req: NextRequest, route: { params: { id: string } }) {
   try {

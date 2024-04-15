@@ -1,9 +1,9 @@
 import { BOARD_SECTIONS } from "../../constants";
-import { BoardSections, TaskStatus, ITask } from "../types";
+import { BoardSections, ITaskAttrs, TaskStatus } from "../types";
 
 import { getTasksByStatus } from "./tasks";
 
-export const initializeBoard = (tasks: ITask[]) => {
+export const initializeBoard = (tasks: ITaskAttrs[]) => {
   const boardSections: BoardSections = {};
 
   Object.keys(BOARD_SECTIONS).forEach((boardSectionKey) => {

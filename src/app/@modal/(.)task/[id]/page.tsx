@@ -10,7 +10,7 @@ const TaskInfoModal = async ({
   searchParams: { ticketId: string };
 }) => {
   const task = params.id !== "new" ? await getTask(params.id) : undefined;
-  console.log(searchParams);
+
   return (
     <Dialog defaultOpen>
       <DialogContent className="sm:max-w-[800px]">

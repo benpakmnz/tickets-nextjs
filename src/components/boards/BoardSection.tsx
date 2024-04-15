@@ -8,15 +8,9 @@ import TaskItem from "./TaskItem";
 import SortableTaskItem from "./SortableTaskItem";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { IBoardSectionAttrs } from "@/types";
 
-interface IBoardSectionProps {
-  id: string;
-  title: string;
-  tasks: any[];
-  ticketId: string;
-}
-
-const BoardSection = ({ id, tasks, title, ticketId }: IBoardSectionProps) => {
+const BoardSection = ({ id, tasks, title, ticketId }: IBoardSectionAttrs) => {
   const { setNodeRef } = useDroppable({
     id,
   });

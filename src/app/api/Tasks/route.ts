@@ -1,13 +1,12 @@
 "use server";
 
-import { db } from "@/app/_helper/config/db";
+import { db } from "@/lib/db/config/db";
 import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
-    console.log(body);
     const newTask = new db.Tasks(body);
     const savedTask = await newTask.save();
 

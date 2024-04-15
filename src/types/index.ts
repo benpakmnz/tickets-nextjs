@@ -1,26 +1,37 @@
-export type TaskStatus = "backlog" | "in progress" | "done";
-export type TicketStatus = "new" | "approved" | "committed" | "done";
+import { Schema } from "mongoose";
 
-export interface ITicket {
-  id?: string;
+export type TaskStatus = "backlog" | "todo" | "in progress" | "done";
+export type TicketStatus = "new" | "approved" | "committed" | "done";
+export type TicketCategory = "ticket" | "bug";
+
+export interface ITicketAttrs {
+  id: string;
   title: string;
   description: string;
+  category: TicketCategory;
+  priority: number;
+  status: TicketStatus;
   owner: string;
   dueDate: string;
-  status: TicketStatus;
-  priority: number;
-  tasks: ITask[];
-  category: string;
+  tasks: ITaskAttrs[];
 }
 
-export interface ITask {
-  id?: string;
+export interface ITaskAttrs {
+  id: string;
   title: string;
   description: string;
-  status: TaskStatus;
   owner: string;
+  status: TaskStatus;
+  ticketId: Schema.Types.ObjectId;
 }
 
-export interface BoardSections {
-  [name: string]: ITask[];
+export type BoardSections = {
+  [name: string]: ITaskAttrs[];
+};
+
+export interface IBoardSectionAttrs {
+  id: string;
+  title: string;
+  tasks: ITaskAttrs[];
+  ticketId: string;
 }

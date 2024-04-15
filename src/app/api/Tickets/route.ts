@@ -3,7 +3,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { addDays, startOfWeek } from "date-fns";
 import { revalidateTag } from "next/cache";
-import { db } from "@/app/_helper/config/db";
+import { db } from "@/lib/db/config/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {

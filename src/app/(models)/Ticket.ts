@@ -1,6 +1,24 @@
-import mongoose, { Schema } from "mongoose";
+import { ITicketAttrs } from "@/types";
+import mongoose, { Model, Schema, Document } from "mongoose";
 
-const ticketsSchema = new Schema(
+interface ITaskId extends Schema.Types.ObjectId {}
+
+interface ITicketModel extends Model<ITicketDocument> {
+  build(attrs: ITicketAttrs): ITicketDocument;
+}
+
+export interface ITicketDocument extends Document {
+  title: string;
+  description: string;
+  category: string;
+  priority: number;
+  status: string;
+  owner: string;
+  dueDate: string;
+  tasks: ITaskId[];
+}
+
+const ticketsSchema = new Schema<ITicketDocument>(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -23,6 +41,7 @@ const ticketsSchema = new Schema(
 );
 
 const Tickets =
-  mongoose.models.Tickets || mongoose.model("Tickets", ticketsSchema);
+  mongoose.models.Tickets ||
+  mongoose.model<ITicketDocument, ITicketModel>("Tickets", ticketsSchema);
 
 export default Tickets;
