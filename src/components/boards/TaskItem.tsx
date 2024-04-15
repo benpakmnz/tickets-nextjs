@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ITaskAttrs } from "../../types";
-import { Card, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
 
 const TaskItem = ({ task }: { task: ITaskAttrs }) => {
   const router = useRouter();
@@ -12,11 +12,13 @@ const TaskItem = ({ task }: { task: ITaskAttrs }) => {
   };
 
   return (
-    <Card onClick={handleClick}>
-      <CardHeader>
-        <CardTitle>{task.title}</CardTitle>
-      </CardHeader>
-    </Card>
+    <Button
+      variant="outline"
+      onClick={handleClick}
+      className="w-full justify-start text-left capitalize font-bold"
+    >
+      {task.title}
+    </Button>
   );
 };
 

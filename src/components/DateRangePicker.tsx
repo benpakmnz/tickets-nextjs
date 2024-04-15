@@ -16,12 +16,19 @@ import {
 import { useState } from "react";
 import { PopoverClose } from "@radix-ui/react-popover";
 
-const DatePickerWithRange: React.FC<{
+interface IDateRangePickerAttrs {
   className?: React.HTMLAttributes<HTMLDivElement>;
   label?: string;
   dates?: DateRange;
   handleSelection: (dates: DateRange | undefined) => void;
-}> = ({ className, label, dates, handleSelection }) => {
+}
+
+const DatePickerWithRange: React.FC<IDateRangePickerAttrs> = ({
+  className,
+  label,
+  dates,
+  handleSelection,
+}) => {
   const [date, setDate] = useState<DateRange | undefined>({
     from: dates?.from || new Date(2022, 0, 20),
     to: dates?.to || addDays(new Date(2022, 0, 20), 20),

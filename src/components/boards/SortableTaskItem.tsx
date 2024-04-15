@@ -2,12 +2,15 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-type SortableTaskItemProps = {
+interface ISortableTaskItemAttrs {
   children: React.ReactNode;
   id: string;
-};
+}
 
-const SortableTaskItem = ({ children, id }: SortableTaskItemProps) => {
+const SortableTaskItem: React.FC<ISortableTaskItemAttrs> = ({
+  children,
+  id,
+}) => {
   const {
     attributes,
     listeners,

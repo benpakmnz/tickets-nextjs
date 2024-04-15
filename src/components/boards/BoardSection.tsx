@@ -10,13 +10,12 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { IBoardSectionAttrs } from "@/types";
 
-const BoardSection = ({ id, tasks, title, ticketId }: IBoardSectionAttrs) => {
+const BoardSection = ({ id, tasks, ticketId }: IBoardSectionAttrs) => {
   const { setNodeRef } = useDroppable({
     id,
   });
   return (
     <div className="min-h-32">
-      <h6 className="font-semibold leading-none tracking-tight">{title}</h6>
       <SortableContext
         id={id}
         items={tasks}
@@ -25,7 +24,7 @@ const BoardSection = ({ id, tasks, title, ticketId }: IBoardSectionAttrs) => {
         <div ref={setNodeRef}>
           {tasks.map((task) => {
             return (
-              <div key={task.id} className="my-3">
+              <div key={task.id} className="mb-3">
                 <SortableTaskItem id={task.id}>
                   <TaskItem task={task} />
                 </SortableTaskItem>
@@ -33,7 +32,7 @@ const BoardSection = ({ id, tasks, title, ticketId }: IBoardSectionAttrs) => {
             );
           })}
           {id === "backlog" && (
-            <Button asChild variant="outline" className="h-6 px-1 mt-0">
+            <Button asChild variant="outline" className="h-6 px-1">
               <Link
                 href={{
                   pathname: "/task/new",

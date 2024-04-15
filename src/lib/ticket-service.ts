@@ -1,3 +1,5 @@
+import { addDays, startOfWeek } from "date-fns";
+
 export const getTicket = async (id: string) => {
   try {
     const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
@@ -13,16 +15,28 @@ export const getTicket = async (id: string) => {
   }
 };
 
-export const getTickets = async (from: string, to: string) => {
+export const getTickets = async (range?: { from: string; to: string }) => {
+  const queryParams = range ? `?from=${range.from}&to=${range.to}` : "";
+  const path = "http://localhost:3000/api/Tickets" + queryParams;
   try {
-    const res = await fetch(
-      `http://localhost:3000/api/Tickets?from=${from}&to=${to}`,
-      { cache: "no-store" }
-    );
+    const res = await fetch(path, { cache: "no-store" });
     const tickets = res.json();
     return tickets;
   } catch (error) {
     console.error("Failed to get tickets", error);
     throw error;
   }
+};
+
+export const getDateRanges = (searchParams: URLSearchParams) => {
+  const today = new Date();
+  const startOfThisWeek = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfThisWeek = addDays(startOfThisWeek, 4);
+  const fromDateString = startOfThisWeek.toISOString().split("T")[0];
+  const toDateString = endOfThisWeek.toISOString().split("T")[0];
+
+  const startDate = searchParams.get("from") || fromDateString;
+  const endDate = searchParams.get("to") || toDateString;
+
+  return { $gte: startDate, $lt: endDate };
 };

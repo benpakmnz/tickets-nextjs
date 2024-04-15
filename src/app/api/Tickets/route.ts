@@ -4,6 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { addDays, startOfWeek } from "date-fns";
 import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db/config/db";
+import { getDateRanges } from "@/lib/ticket-service";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -23,17 +24,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const today = new Date();
-  const startOfThisWeek = startOfWeek(today, { weekStartsOn: 1 });
-  const endOfThisWeek = addDays(startOfThisWeek, 4);
-  const fromDateString = startOfThisWeek.toISOString().split("T")[0];
-  const toDateString = endOfThisWeek.toISOString().split("T")[0];
-
-  const startDate = searchParams.get("from") || fromDateString;
-  const endDate = searchParams.get("to") || toDateString;
+  const range = getDateRanges(searchParams);
   try {
     const tickets = await db.Tickets.find({
-      dueDate: { $gte: startDate, $lt: endDate },
+      dueDate: range,
     }).populate([{ path: "tasks", model: "Tasks" }]);
     return NextResponse.json(tickets, { status: 200 });
   } catch (error) {

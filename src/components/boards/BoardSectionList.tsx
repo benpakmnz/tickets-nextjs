@@ -23,6 +23,8 @@ import { findBoardSectionContainer, initializeBoard } from "@/lib/board";
 import { getTaskById } from "@/lib/tasks";
 import { useRouter } from "next/navigation";
 import { updateTaskStatus } from "@/lib/task-service";
+import TicketCard from "./TicketCard";
+import "./styles.css";
 
 const BoardSectionList = ({ ticket }: { ticket: ITicketAttrs }) => {
   const router = useRouter();
@@ -157,21 +159,12 @@ const BoardSectionList = ({ ticket }: { ticket: ITicketAttrs }) => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="rounded-lg p-8 flex">
-        <div
-          className="w-1/4 h-500 p-4 rounded-xl border bg-card text-card-foreground shadow mr-6"
-          onClick={() => router.push(`/ticket/${ticket.id}`)}
-        >
-          <div>{ticket.title}</div>
-          <div>{ticket.owner}</div>
-          <div>{ticket.status}</div>
-          <div>{ticket.dueDate}</div>
+      <div className="ticket-container">
+        <div className="ticket-card">
+          <TicketCard ticket={ticket} />
         </div>
         {Object.keys(boardSections).map((boardSectionKey) => (
-          <div
-            key={boardSectionKey}
-            className="w-1/4 h-500 p-4 rounded-xl border bg-card text-card-foreground shadow mr-6"
-          >
+          <div key={boardSectionKey} className="task-card">
             <BoardSection
               id={boardSectionKey}
               ticketId={ticket.id!}

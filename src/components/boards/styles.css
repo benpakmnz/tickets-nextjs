@@ -1,0 +1,20 @@
+@tailwind base;
+
+@layer base {
+  .ticket-container {
+    @apply flex mb-5 gap-4 capitalize;
+  }
+
+  .ticket-card {
+    @apply w-1/6;
+  }
+
+  .task-card,
+  .task-card-header {
+    @apply w-2/6 capitalize;
+  }
+
+  .task-card {
+    @apply p-3 rounded-xl border shadow;
+  }
+}

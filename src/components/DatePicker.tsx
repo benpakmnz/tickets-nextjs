@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/popover";
 import { useEffect } from "react";
 
-export const DatePicker = ({
-  handleSelection,
-  initialDate,
-}: {
+interface IDatePickerAttrs {
   handleSelection: (date: string) => void;
   initialDate?: Date;
+}
+
+const DatePicker: React.FC<IDatePickerAttrs> = ({
+  handleSelection,
+  initialDate,
 }) => {
   const [date, setDate] = React.useState<Date | undefined>(
     initialDate || undefined
@@ -59,3 +61,5 @@ export const DatePicker = ({
     </Popover>
   );
 };
+
+export default DatePicker;

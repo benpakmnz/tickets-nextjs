@@ -1,45 +1,33 @@
 import BoardSectionList from "@/components/boards/BoardSectionList";
+import TicketsBoard from "@/components/boards/TicketsBoard";
 import Header from "@/components/Header";
-import { ITicketAttrs } from "@/types";
-import { addDays, startOfWeek } from "date-fns";
+import { getTickets } from "@/lib/ticket-service";
+import { ITicketAttrs, TaskStatus } from "@/types";
+import { NextPage } from "next";
 
-const getTickets = async (from: string, to: string) => {
-  try {
-    const res = await fetch(
-      `http://localhost:3000/api/Tickets?from=${from}&to=${to}`,
-      { cache: "no-store" }
-    );
-    const tickets = res.json();
-    return tickets;
-  } catch (error) {
-    console.error("Failed to get tickets", error);
-    throw error;
+interface HomeProps {
+  searchParams: {
+    from?: string;
+    to?: string;
+  };
+}
+
+const Home: NextPage<HomeProps> = async ({ searchParams }) => {
+  const { from, to } = searchParams;
+  let range;
+  if (from && to) {
+    range = { from, to };
   }
-};
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) {
-  const today = new Date();
-  const startOfThisWeek = startOfWeek(today, { weekStartsOn: 1 });
-  const endOfThisWeek = addDays(startOfThisWeek, 4);
-  const fromDateString = startOfThisWeek.toISOString().split("T")[0];
-  const toDateString = endOfThisWeek.toISOString().split("T")[0];
-
-  const from = searchParams.from || fromDateString;
-  const to = searchParams.to || toDateString;
-  const tickets = await getTickets(from, to);
+  const tickets = await getTickets(range);
   return (
     <>
       <Header />
       <main className="items-center justify-between">
-        {tickets &&
-          tickets.map((ticket: ITicketAttrs) => (
-            <BoardSectionList ticket={ticket} key={ticket.id} />
-          ))}
+        <TicketsBoard tickets={tickets} />
       </main>
     </>
   );
-}
+};
+
+export default Home;

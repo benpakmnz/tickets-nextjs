@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { DatePicker } from "../DatePicker";
+import DatePicker from "../DatePicker";
 import { ITicketAttrs } from "@/types";
 
 const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {

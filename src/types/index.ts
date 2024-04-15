@@ -35,3 +35,10 @@ export interface IBoardSectionAttrs {
   tasks: ITaskAttrs[];
   ticketId: string;
 }
+
+export const statusValues: TaskStatus[] = [
+  "backlog",
+  "todo",
+  "in progress",
+  "done",
+];
