@@ -6,6 +6,7 @@ import { addDays, startOfWeek, format } from "date-fns";
 import DatePickerWithRange from "./DateRangePicker";
 import { Button } from "./ui/button";
 import { useCallback } from "react";
+import Link from "next/link";
 
 const Header = () => {
   const searchParams = useSearchParams();
@@ -50,8 +51,8 @@ const Header = () => {
           dates={handleDatesFromQuery()}
           handleSelection={handleSelection}
         />
-        <Button variant="outline" onClick={() => router.push("/ticket/new")}>
-          Add new
+        <Button variant="outline" className="w-24" asChild>
+          <Link href="/ticket/new">Add New +</Link>
         </Button>
       </div>
     </header>
