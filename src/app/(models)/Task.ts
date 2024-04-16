@@ -16,7 +16,6 @@ export interface ITaskDocument extends Document {
 
 const tasksSchema = new Schema(
   {
-    id: { type: String },
     title: { type: String, required: true },
     description: { type: String, required: true },
     owner: { type: String, required: true },

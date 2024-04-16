@@ -1,7 +1,4 @@
-"use server";
-
 import { db } from "@/lib/db/config/db";
-import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -9,14 +6,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     const newTask = new db.Tasks(body);
     const savedTask = await newTask.save();
+    const ticket = await db.Tickets.findByIdAndUpdate(
+      body.ticketId,
+      {
+        $push: { tasks: savedTask.id },
+      },
+      { new: true }
+    );
 
-    await db.Tickets.findByIdAndUpdate(body.ticketId, {
-      $push: { tasks: savedTask.id },
-    });
-
-    revalidateTag("collection");
     return NextResponse.json(
-      { message: "Task Created", newTask },
+      { message: "Task Created", ticket },
       { status: 201 }
     );
   } catch (error) {

@@ -17,13 +17,7 @@ import DatePicker from "../DatePicker";
 import { ITicketAttrs, ticketStatusOptions } from "@/types";
 import "./styles.css";
 
-const TicketForm = ({
-  initialData,
-  onClose,
-}: {
-  initialData?: ITicketAttrs;
-  onClose: () => void;
-}) => {
+const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
   const router = useRouter();
   const [formData, setFormData] = useState<ITicketAttrs>(
     initialData || {
@@ -66,7 +60,7 @@ const TicketForm = ({
     if (!res.ok) {
       throw new Error("Failed to create Ticket.");
     } else {
-      onClose();
+      router.back();
     }
   };
 

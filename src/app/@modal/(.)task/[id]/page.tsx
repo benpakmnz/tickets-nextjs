@@ -23,11 +23,7 @@ const TaskInfoModal = async ({
       }}
     >
       <DialogContent className="sm:max-w-[800px]">
-        <TaskForm
-          initialData={task}
-          ticketId={searchParams.ticketId}
-          onClose={() => router.refresh()}
-        />
+        <TaskForm initialData={task} ticketId={searchParams.ticketId} />
       </DialogContent>
     </Dialog>
   );

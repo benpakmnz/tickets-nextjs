@@ -18,11 +18,9 @@ import { ITaskAttrs, tasksStatusValues } from "@/types";
 const TicketForm = ({
   initialData,
   ticketId,
-  onClose,
 }: {
   initialData: ITaskAttrs;
   ticketId?: string;
-  onClose: () => void;
 }) => {
   const router = useRouter();
   const [formData, setFormData] = useState<ITaskAttrs>(
@@ -45,6 +43,7 @@ const TicketForm = ({
   };
 
   const handleSubmit = async (e: any) => {
+    debugger;
     e.preventDefault();
     const path = initialData?.id
       ? `http://localhost:3000/api/Tasks/${initialData.id}`
@@ -61,7 +60,7 @@ const TicketForm = ({
     if (!res.ok) {
       throw new Error("Failed to create Task.");
     } else {
-      onClose();
+      router.back();
     }
   };
 

@@ -13,7 +13,7 @@ export interface ITicketAttrs {
   status: TicketStatus;
   owner: string;
   dueDate: string;
-  tasks: ITaskAttrs[];
+  tasks: Schema.Types.ObjectId[];
 }
 
 export interface ITaskAttrs {

@@ -1,8 +1,6 @@
 import { ITicketAttrs } from "@/types";
 import mongoose, { Model, Schema, Document } from "mongoose";
 
-interface ITaskId extends Schema.Types.ObjectId {}
-
 interface ITicketModel extends Model<ITicketDocument> {
   build(attrs: ITicketAttrs): ITicketDocument;
 }
@@ -15,7 +13,7 @@ export interface ITicketDocument extends Document {
   status: string;
   owner: string;
   dueDate: string;
-  tasks: ITaskId[];
+  tasks: Schema.Types.ObjectId[];
 }
 
 const ticketsSchema = new Schema<ITicketDocument>(

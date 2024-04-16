@@ -11,7 +11,6 @@ const TicketInfoModal = () => {
   const router = useRouter();
 
   const [ticket, setTicket] = useState<ITicketAttrs>();
-  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const fetchTicket = async () => {
@@ -24,19 +23,13 @@ const TicketInfoModal = () => {
 
   return (
     <Dialog
-      open={isOpen}
+      open={true}
       onOpenChange={() => {
         router.back();
       }}
     >
       <DialogContent className="sm:max-w-[800px]">
-        <TicketForm
-          initialData={ticket}
-          onClose={() => {
-            router.back();
-            setIsOpen(false);
-          }}
-        />
+        <TicketForm initialData={ticket} />
       </DialogContent>
     </Dialog>
   );
