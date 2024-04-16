@@ -36,6 +36,7 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
   const categoryOptions = ["ticket", "bug"];
 
   const handleChange = (e: any) => {
+    debugger;
     const value = e.target?.value || e.value;
     const name = e.target?.name || e.name;
 
@@ -72,8 +73,12 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
       <form method="post" onSubmit={handleSubmit}>
         <div className="form-item w-1/2">
           <Label>Category</Label>
-          <Select name="category" defaultValue={formData.category}>
-            <SelectTrigger onChange={handleChange}>
+          <Select
+            name="category"
+            defaultValue={formData.category}
+            onValueChange={(value) => handleChange({ value, name: "category" })}
+          >
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -142,8 +147,12 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
           </div>
           <div className="form-item w-1/2">
             <Label className="block">Status</Label>
-            <Select name="status" defaultValue={formData.status}>
-              <SelectTrigger onChange={handleChange}>
+            <Select
+              name="status"
+              defaultValue={formData.status}
+              onValueChange={(value) => handleChange({ value, name: "status" })}
+            >
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

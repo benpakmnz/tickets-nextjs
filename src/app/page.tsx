@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import TicketsBoard from "@/components/boards/TicketsBoard";
+import TicketsBoard from "@/components/board/TicketsBoard";
 
 const Home = () => {
   return (

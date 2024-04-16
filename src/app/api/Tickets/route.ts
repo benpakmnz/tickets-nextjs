@@ -28,7 +28,9 @@ export async function GET(req: NextRequest) {
   try {
     const tickets = await db.Tickets.find({
       dueDate: range,
-    }).populate([{ path: "tasks", model: "Tasks" }]);
+    })
+      .populate([{ path: "tasks", model: "Tasks" }])
+      .sort({ dueDate: "asc" });
     return NextResponse.json(tickets, { status: 200 });
   } catch (error) {
     console.error(error);

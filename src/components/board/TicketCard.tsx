@@ -5,6 +5,7 @@ import { ITicketAttrs } from "../../types";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { format } from "date-fns";
+import { CheckCircleIcon } from "lucide-react";
 
 const TicketCard = ({ ticket }: { ticket: ITicketAttrs }) => {
   const router = useRouter();
@@ -13,9 +14,17 @@ const TicketCard = ({ ticket }: { ticket: ITicketAttrs }) => {
     router.push(`/ticket/${ticket.id}`);
   };
 
+  console.log(ticket);
+  const ticketColor = ticket.category === "bug" ? "bg-rose-100" : "bg-sky-50";
+
   return (
     <Button asChild variant="ghost" onClick={handleClick}>
-      <Card className="h-full w-full p-3 rounded-xl border shadow cursor-pointer">
+      <Card
+        className={`relative align-start h-full w-full p-3 rounded-xl border shadow cursor-pointer ${ticketColor}`}
+      >
+        {ticket.status === "done" && (
+          <CheckCircleIcon className="absolute right-5 top-5" />
+        )}
         <CardHeader>
           <CardTitle>{ticket.title}</CardTitle>
           <CardContent className="p-0">
