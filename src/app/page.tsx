@@ -1,8 +1,6 @@
-import BoardSectionList from "@/components/boards/BoardSectionList";
 import TicketsBoard from "@/components/boards/TicketsBoard";
 import Header from "@/components/Header";
 import { getTickets } from "@/lib/ticket-service";
-import { ITicketAttrs, TaskStatus } from "@/types";
 import { NextPage } from "next";
 
 interface HomeProps {

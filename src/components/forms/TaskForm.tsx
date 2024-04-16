@@ -13,30 +13,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ITicketAttrs, TaskStatus } from "@/types";
+import { ITaskAttrs, tasksStatusValues } from "@/types";
 
 const TicketForm = ({
   initialData,
   ticketId,
+  onClose,
 }: {
-  initialData: ITicketAttrs;
+  initialData: ITaskAttrs;
   ticketId?: string;
+  onClose: () => void;
 }) => {
   const router = useRouter();
-  const [formData, setFormData] = useState<ITicketAttrs>(
+  const [formData, setFormData] = useState<ITaskAttrs>(
     initialData || {
       title: "",
       description: "",
-      status: "new",
+      status: "backlog",
       owner: "",
     }
   );
-  const statusOptions: TaskStatus[] = [
-    "backlog",
-    "todo",
-    "in progress",
-    "done",
-  ];
 
   const handleChange = (e: any) => {
     const value = e.target?.value || e.value;
@@ -64,18 +60,18 @@ const TicketForm = ({
     });
     if (!res.ok) {
       throw new Error("Failed to create Task.");
+    } else {
+      onClose();
     }
-    router.back();
-    router.refresh();
   };
 
   return (
     <>
-      <h1 className="text-2xl">
+      <h1 className="text-3xl font-semibold">
         {initialData?.id ? "Task Information" : "Create New Task"}
       </h1>
       <form className="grid gap-4 py-4" method="post" onSubmit={handleSubmit}>
-        <div>
+        <div className="form-item w-full">
           <Label htmlFor="title" className="text-left">
             Title
           </Label>
@@ -86,7 +82,7 @@ const TicketForm = ({
             onChange={handleChange}
           />
         </div>
-        <div className="items-center">
+        <div className="form-item w-full">
           <Label htmlFor="description" className="text-left">
             Description
           </Label>
@@ -97,8 +93,8 @@ const TicketForm = ({
             onChange={handleChange}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="grid items-center">
+        <div className="flex gap-4">
+          <div className="form-item w-1/2">
             <Label>Owner</Label>
             <Input
               id="owner"
@@ -107,7 +103,7 @@ const TicketForm = ({
               onChange={handleChange}
             />
           </div>
-          <div className="grid items-center">
+          <div className="form-item w-1/2">
             <Label>Status</Label>
             <Select
               name="status"
@@ -118,7 +114,7 @@ const TicketForm = ({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {statusOptions.map((opt) => (
+                {tasksStatusValues.map((opt) => (
                   <SelectItem key={opt} value={opt}>
                     {opt}
                   </SelectItem>
@@ -127,7 +123,19 @@ const TicketForm = ({
             </Select>
           </div>
         </div>
-        <Button>Save</Button>
+        <div className="flex gap-4 justify-end mt-4">
+          <Button className="w-1/4 " variant="default">
+            Save
+          </Button>
+          <Button
+            className="w-1/5"
+            variant="outline"
+            type="button"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </>
   );

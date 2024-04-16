@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { ITicketAttrs, statusValues } from "../../types";
+import { ITicketAttrs } from "../../types";
 import { Button } from "../ui/button";
 import BoardHeader from "./BoardHeader";
 import BoardSectionList from "./BoardSectionList";

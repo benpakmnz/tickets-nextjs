@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db/config/db";
 import { updateParentTicketStatus } from "@/lib/db/dbUtils/ticketUtils";
-import { TaskStatus } from "@/types";
+import { TaskStatus, tasksStatusValues } from "@/types";
 import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -22,14 +22,8 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const validStatusValues: TaskStatus[] = [
-      "backlog",
-      "todo",
-      "in progress",
-      "done",
-    ];
 
-    if (!Object.values(validStatusValues).includes(body.status)) {
+    if (!Object.values(tasksStatusValues).includes(body.status)) {
       return NextResponse.json(
         { message: `Invalid status: ${body.status}` },
         { status: 400 }

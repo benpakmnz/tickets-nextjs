@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -14,9 +14,16 @@ import {
   SelectValue,
 } from "../ui/select";
 import DatePicker from "../DatePicker";
-import { ITicketAttrs } from "@/types";
+import { ITicketAttrs, ticketStatusOptions } from "@/types";
+import "./styles.css";
 
-const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
+const TicketForm = ({
+  initialData,
+  onClose,
+}: {
+  initialData?: ITicketAttrs;
+  onClose: () => void;
+}) => {
   const router = useRouter();
   const [formData, setFormData] = useState<ITicketAttrs>(
     initialData || {
@@ -30,7 +37,8 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
       tasks: [],
     }
   );
-  const statusOptions = ["approved", "committed", "done", "new"];
+
+  useEffect(() => initialData && setFormData(initialData), [initialData]);
   const categoryOptions = ["ticket", "bug"];
 
   const handleChange = (e: any) => {
@@ -57,35 +65,33 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
     });
     if (!res.ok) {
       throw new Error("Failed to create Ticket.");
+    } else {
+      onClose();
     }
-    router.back();
-    router.refresh();
   };
 
   return (
     <>
-      <h1 className="text-2xl">
-        {initialData?.id ? "Ticket Information" : "Create New Ticket"}
+      <h1 className="text-3xl font-semibold">
+        {formData.id ? "Ticket Information" : "Create New Ticket"}
       </h1>
-      <form className="grid gap-4 py-4" method="post" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="grid grid-cols-1">
-            <Label>Category</Label>
-            <Select name="category" defaultValue={formData.category}>
-              <SelectTrigger onChange={handleChange}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {categoryOptions.map((opt) => (
-                  <SelectItem key={opt} value={opt}>
-                    {opt}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+      <form method="post" onSubmit={handleSubmit}>
+        <div className="form-item w-1/2">
+          <Label>Category</Label>
+          <Select name="category" defaultValue={formData.category}>
+            <SelectTrigger onChange={handleChange}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {categoryOptions.map((opt) => (
+                <SelectItem key={opt} value={opt}>
+                  {opt}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div>
+        <div className="form-item w-full">
           <Label htmlFor="title" className="text-left">
             Title
           </Label>
@@ -96,7 +102,7 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="items-center">
+        <div className="form-item w-full">
           <Label htmlFor="description" className="text-left">
             Description
           </Label>
@@ -107,8 +113,8 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="grid items-center">
+        <div className="flex gap-4">
+          <div className="form-item w-1/2">
             <Label>Owner</Label>
             <Input
               id="owner"
@@ -117,7 +123,7 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid items-center">
+          <div className="form-item w-1/2">
             <Label className="text-left">Priority</Label>
             <Input
               id="priority"
@@ -128,9 +134,9 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="grid grid-cols-1">
-            <Label className="w-full">Due Dates</Label>
+        <div className="flex gap-4 items-center">
+          <div className="form-item w-1/2">
+            <Label className="block">Due Dates</Label>
             <DatePicker
               initialDate={
                 formData.dueDate ? new Date(formData.dueDate) : undefined
@@ -140,14 +146,14 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
               }
             />
           </div>
-          <div className="grid grid-cols-1">
-            <Label>Status</Label>
+          <div className="form-item w-1/2">
+            <Label className="block">Status</Label>
             <Select name="status" defaultValue={formData.status}>
               <SelectTrigger onChange={handleChange}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {statusOptions.map((opt) => (
+                {ticketStatusOptions.map((opt) => (
                   <SelectItem key={opt} value={opt}>
                     {opt}
                   </SelectItem>
@@ -156,7 +162,19 @@ const TicketForm = ({ initialData }: { initialData: ITicketAttrs }) => {
             </Select>
           </div>
         </div>
-        <Button>Save</Button>
+        <div className="flex gap-4 justify-end mt-4">
+          <Button className="w-1/4 " variant="default">
+            Save
+          </Button>
+          <Button
+            className="w-1/5"
+            variant="outline"
+            type="button"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </>
   );

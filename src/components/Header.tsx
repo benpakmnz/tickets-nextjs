@@ -51,8 +51,12 @@ const Header = () => {
           dates={handleDatesFromQuery()}
           handleSelection={handleSelection}
         />
-        <Button variant="outline" className="w-24" asChild>
-          <Link href="/ticket/new">Add New +</Link>
+        <Button
+          variant="outline"
+          className="w-24"
+          onClick={() => router.push(`/ticket/new`)}
+        >
+          Add New +
         </Button>
       </div>
     </header>

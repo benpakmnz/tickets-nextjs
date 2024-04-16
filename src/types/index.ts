@@ -5,7 +5,7 @@ export type TicketStatus = "new" | "approved" | "committed" | "done";
 export type TicketCategory = "ticket" | "bug";
 
 export interface ITicketAttrs {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   category: TicketCategory;
@@ -22,7 +22,7 @@ export interface ITaskAttrs {
   description: string;
   owner: string;
   status: TaskStatus;
-  ticketId: Schema.Types.ObjectId;
+  ticketId?: Schema.Types.ObjectId;
 }
 
 export type BoardSections = {
@@ -36,9 +36,16 @@ export interface IBoardSectionAttrs {
   ticketId: string;
 }
 
-export const statusValues: TaskStatus[] = [
+export const tasksStatusValues: TaskStatus[] = [
   "backlog",
   "todo",
   "in progress",
   "done",
+];
+
+export const ticketStatusOptions: TicketStatus[] = [
+  "approved",
+  "committed",
+  "done",
+  "new",
 ];

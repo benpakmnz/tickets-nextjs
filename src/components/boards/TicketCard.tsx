@@ -15,7 +15,7 @@ const TicketCard = ({ ticket }: { ticket: ITicketAttrs }) => {
 
   return (
     <Button asChild variant="ghost" onClick={handleClick}>
-      <Card className="h-full p-3 rounded-xl border shadow cursor-pointer">
+      <Card className="h-full w-full p-3 rounded-xl border shadow cursor-pointer">
         <CardHeader>
           <CardTitle>{ticket.title}</CardTitle>
           <CardContent className="p-0">
