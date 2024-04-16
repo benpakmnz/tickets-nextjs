@@ -26,7 +26,13 @@ import { updateTaskStatus } from "@/lib/task-service";
 import TicketCard from "./TicketCard";
 import "./styles.css";
 
-const BoardSectionList = ({ ticket }: { ticket: ITicketAttrs }) => {
+const BoardSectionList = ({
+  ticket,
+  refresh,
+}: {
+  ticket: ITicketAttrs;
+  refresh: () => void;
+}) => {
   const router = useRouter();
   const [boardSections, setBoardSections] = useState<BoardSectionsType>(
     initializeBoard(ticket.tasks || [])
@@ -142,7 +148,8 @@ const BoardSectionList = ({ ticket }: { ticket: ITicketAttrs }) => {
     setActiveTaskId(null);
     if (over) {
       await updateTaskStatus(active.id.toString(), overContainer);
-      router.refresh();
+      refresh();
+      // router.refresh();
     }
   };
 
