@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ITicketAttrs } from "../../types";
 import { Button } from "../ui/button";
 import BoardHeader from "./BoardHeader";

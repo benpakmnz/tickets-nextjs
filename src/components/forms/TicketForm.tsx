@@ -49,7 +49,7 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const path = `${BASE_URI}/api/Tasks/${initialData?.id || ""}`;
+    const path = `${BASE_URI}/Tickets/${initialData?.id || ""}`;
     const res = await fetch(path, {
       method: initialData?.id ? "PUT" : "POST",
       body: JSON.stringify(formData),

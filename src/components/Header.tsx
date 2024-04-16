@@ -6,7 +6,6 @@ import { addDays, startOfWeek, format } from "date-fns";
 import DatePickerWithRange from "./DateRangePicker";
 import { Button } from "./ui/button";
 import { useCallback } from "react";
-import Link from "next/link";
 
 const Header = () => {
   const searchParams = useSearchParams();
