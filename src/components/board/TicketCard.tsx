@@ -14,7 +14,6 @@ const TicketCard = ({ ticket }: { ticket: ITicketAttrs }) => {
     router.push(`/ticket/${ticket.id}`);
   };
 
-  console.log(ticket);
   const ticketColor = ticket.category === "bug" ? "bg-rose-100" : "bg-sky-50";
 
   return (

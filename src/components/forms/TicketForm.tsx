@@ -16,6 +16,7 @@ import {
 import DatePicker from "../DatePicker";
 import { ITicketAttrs, ticketStatusOptions } from "@/types";
 import "./styles.css";
+import { BASE_URI } from "../../../constants";
 
 const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
   const router = useRouter();
@@ -33,10 +34,10 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
   );
 
   useEffect(() => initialData && setFormData(initialData), [initialData]);
+
   const categoryOptions = ["ticket", "bug"];
 
   const handleChange = (e: any) => {
-    debugger;
     const value = e.target?.value || e.value;
     const name = e.target?.name || e.name;
 
@@ -48,9 +49,7 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const path = initialData?.id
-      ? `http://localhost:3000/api/Tickets/${initialData.id}`
-      : "http://localhost:3000/api/Tickets";
+    const path = `${BASE_URI}/api/Tasks/${initialData?.id || ""}`;
     const res = await fetch(path, {
       method: initialData?.id ? "PUT" : "POST",
       body: JSON.stringify(formData),
@@ -149,7 +148,7 @@ const TicketForm = ({ initialData }: { initialData?: ITicketAttrs }) => {
             <Label className="block">Status</Label>
             <Select
               name="status"
-              defaultValue={formData.status}
+              value={formData.status}
               onValueChange={(value) => handleChange({ value, name: "status" })}
             >
               <SelectTrigger>

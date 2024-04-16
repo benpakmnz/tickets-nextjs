@@ -1,8 +1,9 @@
 import { addDays, startOfWeek } from "date-fns";
+import { BASE_URI } from "../../constants";
 
 export const getTicket = async (id: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
+    const res = await fetch(`${BASE_URI}/Tickets/${id}`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -17,7 +18,7 @@ export const getTicket = async (id: string) => {
 
 export const getTickets = async (range?: { from: string; to: string }) => {
   const queryParams = range ? `?from=${range.from}&to=${range.to}` : "";
-  const path = "http://localhost:3000/api/Tickets" + queryParams;
+  const path = `${BASE_URI}/Tickets${queryParams}`;
   try {
     const res = await fetch(path, { cache: "no-store" });
     const tickets = res.json();

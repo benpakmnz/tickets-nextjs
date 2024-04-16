@@ -1,6 +1,8 @@
+import { BASE_URI } from "../../constants";
+
 export const getTask = async (id: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Tasks/${id}`, {
+    const res = await fetch(`${BASE_URI}/Tasks/${id}`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -15,7 +17,7 @@ export const getTask = async (id: string) => {
 
 export const updateTaskStatus = async (id: string, status: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Tasks/${id}/Status`, {
+    const res = await fetch(`${BASE_URI}/Tasks/${id}/Status`, {
       cache: "no-store",
       method: "PATCH",
       body: JSON.stringify({ status }),

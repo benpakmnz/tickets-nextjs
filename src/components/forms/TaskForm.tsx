@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { ITaskAttrs, tasksStatusValues } from "@/types";
+import { BASE_URI } from "../../../constants";
 
 const TicketForm = ({
   initialData,
@@ -43,12 +44,8 @@ const TicketForm = ({
   };
 
   const handleSubmit = async (e: any) => {
-    debugger;
     e.preventDefault();
-    const path = initialData?.id
-      ? `http://localhost:3000/api/Tasks/${initialData.id}`
-      : "http://localhost:3000/api/Tasks";
-
+    const path = `${BASE_URI}/Tasks/${initialData?.id || ""}`;
     const res = await fetch(path, {
       cache: "no-store",
       method: initialData?.id ? "PUT" : "POST",
